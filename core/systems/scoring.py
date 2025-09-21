@@ -1,0 +1,1 @@
+# reglas de puntaje (arcade sencillo o tenis; elegible por config).

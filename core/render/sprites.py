@@ -1,0 +1,1 @@
+# carga de spritesheets, clase Animation, selección por dirección (NE/NW/SE/SW).

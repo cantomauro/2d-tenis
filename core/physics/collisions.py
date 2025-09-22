@@ -1,36 +1,67 @@
-# colisión círculo-rect para pelota–jugador, rebotes con bordes, cálculo de normal y reflexión.
+# core/physics/collisions.py
+from math import copysign
+from core.config import BALL_HIT_COOLDOWN, MAX_HIT_ANGLE_X, BALL_HIT_SPEED
 
-from core.utils.math2d import reflect
+def ball_vs_player(ball, player, court_rect):
+    """
+    - player.hit_rect está en plano 2D (no isométrico).S
+    - court_rect es el rect de la cancha (lo usamos solo para saber mitad top/bottom).
+    """
+    r = player.hit_rect
 
-def circle_rect_collision(cx, cy, r, rect):
-    # punto más cercano del rect al centro
-    closest_x = max(rect.left, min(cx, rect.right))
-    closest_y = max(rect.top,  min(cy, rect.bottom))
-    dx, dy = cx - closest_x, cy - closest_y
-    return (dx*dx + dy*dy) <= (r*r), dx, dy
+    # Punto más cercano del rect al centro de la bola (AABB vs círculo)
+    closest_x = max(r.left, min(ball.x, r.right))
+    closest_y = max(r.top,  min(ball.y, r.bottom))
+    dx = ball.x - closest_x
+    dy = ball.y - closest_y
+    if (dx*dx + dy*dy) > (ball.radius * ball.radius):
+        return  # No hay colisión
 
-def ball_vs_bounds(ball, bounds_rect):
-    # Rebote contra límites del mundo (cancha)
-    bounced = False
-    if ball.x - ball.radius < bounds_rect.left:
-        ball.x = bounds_rect.left + ball.radius; ball.vx *= -1; bounced = True
-    if ball.x + ball.radius > bounds_rect.right:
-        ball.x = bounds_rect.right - ball.radius; ball.vx *= -1; bounced = True
-    if ball.y - ball.radius < bounds_rect.top:
-        ball.y = bounds_rect.top + ball.radius; ball.vy *= -1; bounced = True
-    if ball.y + ball.radius > bounds_rect.bottom:
-        ball.y = bounds_rect.bottom - ball.radius; ball.vy *= -1; bounced = True
-    return bounced
+    # Evitar hits múltiples seguidos
+    if ball.hit_cooldown > 0:
+        separate_ball_from_player(ball, player)
+        return
 
-def ball_vs_player(ball, player):
-    hit, dx, dy = circle_rect_collision(ball.x, ball.y, ball.radius, player.hit_rect)
-    if not hit:
-        return False
-    # normal desde punto de contacto hacia centro de la pelota
-    # decidir eje de mayor penetración: simple usando |dx| vs |dy|
-    if abs(dx) > abs(dy):
-        nx, ny = (1, 0) if dx > 0 else (-1, 0)
+    # ¿P2 (arriba) o P1 (abajo)? (según mitad de la cancha)
+    court_mid_y = court_rect.top + court_rect.height * 0.5
+    is_p2 = (r.centery < court_mid_y)
+
+    # Dirección Y: P2 pega hacia abajo (+y), P1 hacia arriba (-y)
+    dir_y = 1.0 if is_p2 else -1.0
+
+    # Dirección X según dónde impacta en el ancho del jugador
+    rel = (ball.x - r.centerx) / (r.width * 0.5)
+    rel = max(-1.0, min(1.0, rel))  # clamp
+    dir_x = rel * MAX_HIT_ANGLE_X
+
+    # Evitar trayectoria 100% vertical
+    if abs(dir_x) < 0.05:
+        dir_x = copysign(0.05, dir_x if dir_x != 0 else 1)
+
+    # Aplicar velocidad fija
+    ball.set_velocity_dir(BALL_HIT_SPEED, dir_x, dir_y)
+
+    # Marcar hitter + cooldown
+    ball.last_hitter = "P2" if is_p2 else "P1"
+    ball.hit_cooldown = BALL_HIT_COOLDOWN
+
+    # Separar la bola del jugador
+    separate_ball_from_player(ball, player)
+
+
+def separate_ball_from_player(ball, player):
+    """Saca la bola fuera del rect del jugador empujándola en su dirección actual."""
+    push = max(1.0, ball.radius)
+    norm = (ball.vx**2 + ball.vy**2) ** 0.5
+    if norm < 1e-6:
+        dx, dy = 0.0, -1.0
     else:
-        nx, ny = (0, 1) if dy > 0 else (0, -1)
-    ball.vx, ball.vy = reflect(ball.vx, ball.vy, nx, ny)
-    return True
+        dx, dy = (ball.vx / norm), (ball.vy / norm)
+
+    r = player.hit_rect
+    for _ in range(6):
+        if r.collidepoint(ball.x, ball.y):
+            ball.x += dx * push
+            ball.y += dy * push
+        else:
+            break

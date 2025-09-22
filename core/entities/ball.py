@@ -11,6 +11,8 @@ class Ball(Entity):
         self.radius = radius              # ← tamaño de colisión
         self.visual_scale = 1.6  # ← multiplicador visual (1.0 = igual que radius)
         self.visual_radius = visual_radius  # ← override absoluto visual en “radio”
+        self.last_hitter = None    # "P1" | "P2" | None
+        self.hit_cooldown = 0.0    # segundos restantes de cooldown
 
         # carga de imagen
         if image_path is None:
@@ -30,6 +32,8 @@ class Ball(Entity):
     def update(self, dt):
         self.x += self.vx * dt
         self.y += self.vy * dt
+        if self.hit_cooldown > 0:
+            self.hit_cooldown = max(0.0, self.hit_cooldown - dt)
 
     def _get_scaled_image(self):
         if not self._img:
@@ -50,3 +54,12 @@ class Ball(Entity):
             surface.blit(img, rect)
         else:
             pygame.draw.circle(surface, (250,220,80), (int(sx), int(sy)), max(2, int(self.radius*0.9)))
+
+    def set_velocity_dir(self, speed, dir_x, dir_y):
+        # Normaliza (dir_x, dir_y) y aplica 'speed' manteniendo dirección
+        import math
+        mag = math.hypot(dir_x, dir_y)
+        if mag < 1e-6:
+            return  # evita división por cero
+        self.vx = speed * (dir_x / mag)
+        self.vy = speed * (dir_y / mag)

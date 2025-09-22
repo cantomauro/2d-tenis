@@ -26,6 +26,7 @@ from core.utils.math2d import clamp
 SCREEN_W, SCREEN_H = 1024, 768
 FPS = 60
 
+
 # COLORES Y CONSTANTE DEL DELAY DEL SAQUE (en segundos)
 SERVE_DELAY = 1.0
 P1_MSG_COLOR = (64, 160, 255)   # azul para P1
@@ -139,6 +140,9 @@ def main():
 
     # CANCHA (mundo) y su renderer
     court = Court(COURT_BOUNDS, screen_offset=(ISO_OFFSET_X, ISO_OFFSET_Y))
+    PHYS = court.physics_rect
+    LEFT_SINGLES_X = court.play_rect.left
+    RIGHT_SINGLES_X = court.play_rect.right
 
     # ENTIDADES: jugadores y pelota
     p1 = Player(COURT_X + COURT_W / 2, COURT_Y + COURT_H * 0.85, speed=190, is_ai=False, name="P1")
@@ -165,13 +169,13 @@ def main():
 
         keys = pygame.key.get_pressed()
 
-        # DELAY LUEGO DEL TANTO: pelota quieta hasta vencer el timer
+        #  pelota quieta hasta que pase el tiempo luego de un tanto
         if serve_timer > 0:
             serve_timer -= dt
             if serve_timer <= 0:
                 apply_serve_velocity(ball, towards_p2=serve_dir_p2)
 
-        # Durante el delay bloqueamos movimiento
+        # durante el delay se bloquea el movimiento
         serve_locked = (serve_timer > 0)
 
         # INPUT / IA
@@ -197,17 +201,17 @@ def main():
         # UPDATE lógicos
         ball.update(dt)
 
-        # Rebotes LATERALES (izquierda/derecha) — top/bottom cuentan punto
-        if ball.x - ball.radius <= COURT_BOUNDS.left:
-            ball.x = COURT_BOUNDS.left + ball.radius
+        # Rebotes LATERALES en líneas de singles (internas), simétrico
+        if ball.x - ball.radius < LEFT_SINGLES_X:
+            ball.x = LEFT_SINGLES_X + ball.radius
             ball.vx *= -1
-        elif ball.x + ball.radius >= COURT_BOUNDS.right:
-            ball.x = COURT_BOUNDS.right - ball.radius
+        elif ball.x + ball.radius > RIGHT_SINGLES_X:
+            ball.x = RIGHT_SINGLES_X - ball.radius
             ball.vx *= -1
 
         # Colisiones pelota–jugadores
-        ball_vs_player(ball, p1)
-        ball_vs_player(ball, p2)
+        ball_vs_player(ball, p1, PHYS)
+        ball_vs_player(ball, p2, PHYS)
 
         # PUNTOS y SAQUE PROGRAMADO
         p1_score, p2_score, scored, _next_towards_p2, scorer = check_point(ball, p1_score, p2_score)
@@ -258,3 +262,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

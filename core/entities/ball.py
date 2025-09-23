@@ -1,22 +1,17 @@
 # core/entities/ball.py
 import pygame
 from core.entities.base import Entity
-from core.utils.paths import asset
 
 class Ball(Entity):
-    def __init__(self, x, y, vx=220, vy=-160, radius=6, image_path=None,
+    def __init__(self, x, y, vx=220, vy=-160, radius=1, image_path="core/entities/ball.png",
                  visual_scale=1.0, visual_radius=None):
         super().__init__(x, y)
         self.vx, self.vy = vx, vy
         self.radius = radius              # ← tamaño de colisión
-        self.visual_scale = 1.6  # ← multiplicador visual (1.0 = igual que radius)
+        self.visual_scale = 1  # ← multiplicador visual (1.0 = igual que radius)
         self.visual_radius = visual_radius  # ← override absoluto visual en “radio”
         self.last_hitter = None    # "P1" | "P2" | None
         self.hit_cooldown = 0.0    # segundos restantes de cooldown
-
-        # carga de imagen
-        if image_path is None:
-            image_path = asset("ball", "ball.png")
         self._img = None
         self._img_scaled = None
         self._img_scale_key = None

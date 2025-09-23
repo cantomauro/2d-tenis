@@ -145,9 +145,9 @@ def main():
     RIGHT_SINGLES_X = court.play_rect.right
 
     # ENTIDADES: jugadores y pelota
-    p1 = Player(COURT_X + COURT_W / 2, COURT_Y + COURT_H * 0.85, speed=190, is_ai=False, name="P1")
-    p2 = Player(COURT_X + COURT_W / 2, COURT_Y + COURT_H * 0.15, speed=175, is_ai=P2_IS_AI, name="P2")
-    ball = Ball(COURT_X + COURT_W / 2, COURT_Y + COURT_H / 2, vx=0, vy=0, radius=30, visual_radius=12)
+    p1 = Player(COURT_X + COURT_W / 2, COURT_Y + COURT_H * 0.85, speed=190, is_ai=False, name="P1", visual_scale=4)
+    p2 = Player(COURT_X + COURT_W / 2, COURT_Y + COURT_H * 0.15, speed=175, is_ai=P2_IS_AI, name="P2", visual_scale=5)
+    ball = Ball(COURT_X + COURT_W / 2, COURT_Y + COURT_H / 2, vx=0, vy=0, radius=10, visual_scale=0.1)
 
     # Quién saca y primer saque programado
     server = "P1"  # arranca sacando P1
@@ -218,6 +218,7 @@ def main():
         if scored:
             # El que anota, SACA
             server = scorer  # "P1" o "P2"
+            reset_players_to_spawn(p1, p2)
 
             # Programar el saque según QUIÉN saca (dirección hacia el rival)
             serve_timer, serve_dir_p2 = prepare_serve(ball, towards_p2=(server == "P1"))

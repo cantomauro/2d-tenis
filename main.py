@@ -145,8 +145,8 @@ def main():
     RIGHT_SINGLES_X = court.play_rect.right
 
     # ENTIDADES: jugadores y pelota
-    p1 = Player(COURT_X + COURT_W / 2, COURT_Y + COURT_H * 0.85, speed=190, is_ai=False, name="P1", visual_scale=4)
-    p2 = Player(COURT_X + COURT_W / 2, COURT_Y + COURT_H * 0.15, speed=175, is_ai=P2_IS_AI, name="P2", visual_scale=5)
+    p1 = Player(COURT_X + COURT_W / 2, COURT_Y + COURT_H * 0.85, speed=190, is_ai=False, name="P1", image_path=("player", "core/entities/player2.png"), visual_scale=4)
+    p2 = Player(COURT_X + COURT_W / 2, COURT_Y + COURT_H * 0.15, speed=175, is_ai=P2_IS_AI, name="P2",  image_path=("player", "core/entities/player .png"), visual_scale=5)
     ball = Ball(COURT_X + COURT_W / 2, COURT_Y + COURT_H / 2, vx=0, vy=0, radius=10, visual_scale=0.1)
 
     # Quién saca y primer saque programado

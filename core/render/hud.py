@@ -1,6 +1,3 @@
-# marcador (pygame.font), textos de estado (pausa, countdown, game over).
-
-import pygame
 
 class Hud:
     def __init__(self, font):

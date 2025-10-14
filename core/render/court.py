@@ -1,17 +1,16 @@
-# core/render/court.py
 import pygame
 
 class Court:
     def __init__(self, world_rect: pygame.Rect, screen_offset=(0, 0),
                  fill_color=(30, 120, 60), line_color=(255, 255, 255)):
         self.net_color = (229, 190, 1)
-        self.world_rect = world_rect           # borde exterior (paredes)
-        self.physics_rect = world_rect.copy()  # alias explícito para física
+        self.world_rect = world_rect           # borde exterior = paredes
+        self.physics_rect = world_rect.copy()
         self.ox, self.oy = screen_offset
         self.fill_color = fill_color
         self.line_color = line_color
 
-        # ---- Cálculos geométricos base (una sola vez) ----
+        # calculos geometricos
         l, t, r, b = world_rect.left, world_rect.top, world_rect.right, world_rect.bottom
         w, h = r - l, b - t
         self.cx = (l + r) / 2.0
@@ -21,11 +20,11 @@ class Court:
         singles_ratio = 8.23 / 10.97
         inset = (1.0 - singles_ratio) / 2.0 * w  # float
 
-        # Redondeo simétrico a enteros para evitar desfasajes por truncado
+        # redondeo simétrico a enteros para evitar desfasajes por trunc
         self.x_left_singles = int(round(l + inset))
         self.x_right_singles = int(round(r - inset))
 
-        # Rect de juego (singles) construido con esos enteros
+        # Rect de juego. Siempre singles
         self.play_rect = pygame.Rect(
             self.x_left_singles,
             t,
@@ -38,7 +37,7 @@ class Court:
         self.service_y_top = self.cy - service_offset
         self.service_y_bot = self.cy + service_offset
 
-        # marca central (muesca) = 0.10m
+        # marca de mitad de cancha vertical = 0.10m
         self.center_mark_h = (0.10 / 23.77) * h
 
     def iso_corners(self, world_to_iso_fn):

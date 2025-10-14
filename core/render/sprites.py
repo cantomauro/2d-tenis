@@ -1,1 +1,1 @@
-# carga de spritesheets, clase Animation, selección por dirección (NE/NW/SE/SW).
+# carga de spritesheets, clase aimation etc... a modificar

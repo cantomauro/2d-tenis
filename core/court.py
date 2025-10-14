@@ -6,7 +6,7 @@ class Court:
         self.ox, self.oy = screen_offset
 
     def draw(self, surface, world_to_iso):
-        # Dibujo isométrico básico: 4 esquinas del rect mundo -> iso, luego un polígono
+        # dibujo isométrico básico: 4 esquinas del rect mundo -> iso, luego un polígono
         l, t, w, h = self.world_rect
         r, b = l + w, t + h
         corners = [(l, t), (r, t), (r, b), (l, b)]

@@ -1,5 +1,3 @@
-# clase base Entity con world_pos, update(dt), draw(surface), y depth_key (para orden por iso_y).
-
 from core.iso.projection import world_to_iso, depth_key_from_world
 
 class Entity:

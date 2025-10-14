@@ -3,8 +3,7 @@ from core.utils.math2d import normalize
 
 def ai_drive(player_ai, ball, dt):
     """
-    IA simple: intenta alinear x e y con la pelota y aplica movimiento.
-    El clamp a la mitad de cancha lo hace main.py (desacoplado).
+    intenta alinear x e y con la pelota.
     """
     dx = ball.x - player_ai.x
     dy = ball.y - player_ai.y
@@ -19,7 +18,7 @@ def ai_drive(player_ai, ball, dt):
     else:
         ndx, ndy = normalize(dx, dy)
 
-    # pequeño boost si la pelota va "hacia abajo"
+    # boost si la pelota va "hacia abajo"
     boost = 1.15 if ball.vy > 0 else 1.0
 
     player_ai.apply_input(ndx * boost, ndy * boost, dt)

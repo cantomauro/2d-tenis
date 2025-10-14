@@ -8,8 +8,8 @@ class Player(Entity):
     def __init__(self, x, y, speed=180, is_ai=False, name="P",
                  image_path=None, visual_scale=1.0, visual_size=None):
         """
-        visual_scale: escala relativa del sprite respecto al hitbox (si visual_size es None)
-        visual_size:  (w, h) tamaño absoluto del sprite (opcional). Si se define, ignora visual_scale.
+        visual_scale es la escala relativa del sprite respecto al hitbox (si visual_size es None)
+        visual_size  (w, h) tamaño absoluto del sprite si se define ignora visual_scale.
         """
         super().__init__(x, y)
         self.speed = speed
@@ -19,14 +19,12 @@ class Player(Entity):
         self.vy = 0.0
         self.color = (40, 160, 255)
 
-        # >>> FIX: estos vienen de la firma
         self.visual_scale = float(visual_scale)
-        self.visual_size  = visual_size  # None o (w, h)
+        self.visual_size  = visual_size
 
-        # Imagen
+        # imagen
         if image_path is None:
-            # Usa assets/player/player.png por defecto
-            image_path = "core/entities/player.png"
+            image_path = "core/entities/player.png", "player", "core/entities/player2.png"
         self._img = None
         self._img_scaled = None
         self._img_scale_key = None
@@ -50,7 +48,7 @@ class Player(Entity):
         if not self._img:
             return None
 
-        # Si se da tamaño absoluto, lo usamos
+        # si se da tamaño absoluto
         if self.visual_size:
             key = ("abs", tuple(self.visual_size))
             if self._img_scale_key != key:
@@ -58,7 +56,7 @@ class Player(Entity):
                 self._img_scale_key = key
             return self._img_scaled
 
-        # Si no, escalamos relativo al hitbox
+        # si no relativo al hitbox
         target_w = max(8, int(PLAYER_W * self.visual_scale))
         target_h = max(8, int(PLAYER_H * self.visual_scale * 1.2))
         key = ("rel", target_w, target_h)
@@ -74,5 +72,5 @@ class Player(Entity):
             rect = img.get_rect(center=(int(sx), int(sy)))
             surface.blit(img, rect)
         else:
-            # Fallback si no hay imagen
+            # si no hay imagen
             pygame.draw.rect(surface, self.color, (sx-8, sy-6, 16, 12), width=0)

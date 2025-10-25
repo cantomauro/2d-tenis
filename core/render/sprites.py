@@ -1,1 +1,0 @@
-# carga de spritesheets, clase aimation etc... a modificar

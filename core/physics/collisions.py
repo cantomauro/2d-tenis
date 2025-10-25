@@ -1,6 +1,7 @@
 # core/physics/collisions.py
 from math import copysign
 from core.config import BALL_HIT_COOLDOWN, MAX_HIT_ANGLE_X, BALL_HIT_SPEED
+from core.audio.sfx import play_golpe
 
 def ball_vs_player(ball, player, court_rect):
     """
@@ -44,6 +45,7 @@ def ball_vs_player(ball, player, court_rect):
     #  hitter + cooldown
     ball.last_hitter = "P2" if is_p2 else "P1"
     ball.hit_cooldown = BALL_HIT_COOLDOWN
+    play_golpe()
 
     # separa la bola del jugador
     separate_ball_from_player(ball, player)

@@ -1,15 +1,27 @@
 # core/entities/player.py
 import pygame
 from core.entities.base import Entity
+from core.utils.paths import asset
 
 PLAYER_W, PLAYER_H = 28, 18  # hitbox de colisión (mundo)
 
+
 class Player(Entity):
-    def __init__(self, x, y, speed=180, is_ai=False, name="P",
-                 image_path=None, visual_scale=1.0, visual_size=None):
+    def __init__(
+        self,
+        x,
+        y,
+        speed=180,
+        is_ai=False,
+        name="P",
+        image_path=None,
+        visual_scale=1.0,
+        visual_size=None,
+        visual_rotation=0.0,
+    ):
         """
-        visual_scale es la escala relativa del sprite respecto al hitbox (si visual_size es None)
-        visual_size  (w, h) tamaño absoluto del sprite si se define ignora visual_scale.
+        visual_scale: escala relativa del sprite respecto al hitbox (si visual_size es None)
+        visual_size:  (w, h) tamaño absoluto del sprite (opcional). Si se define ignora visual_scale.
         """
         super().__init__(x, y)
         self.speed = speed
@@ -20,11 +32,13 @@ class Player(Entity):
         self.color = (40, 160, 255)
 
         self.visual_scale = float(visual_scale)
-        self.visual_size  = visual_size
+        self.visual_size = visual_size
+        self.visual_rotation = float(visual_rotation)
+        self.home_x = x
+        self.home_y = y
 
-        # imagen
         if image_path is None:
-            image_path = "core/entities/player.png", "player", "core/entities/player2.png"
+            image_path = asset("players", "player1.png")
         self._img = None
         self._img_scaled = None
         self._img_scale_key = None
@@ -35,8 +49,8 @@ class Player(Entity):
             self._img = None
 
     @property
-    def hit_rect(self):  # rect en MUNDO
-        return pygame.Rect(int(self.x - PLAYER_W/2), int(self.y - PLAYER_H/2), PLAYER_W, PLAYER_H)
+    def hit_rect(self):
+        return pygame.Rect(int(self.x - PLAYER_W / 2), int(self.y - PLAYER_H / 2), PLAYER_W, PLAYER_H)
 
     def apply_input(self, dx, dy, dt):
         self.vx = dx * self.speed
@@ -48,20 +62,26 @@ class Player(Entity):
         if not self._img:
             return None
 
-        # si se da tamaño absoluto
+        rotation = round(self.visual_rotation, 3)
+
         if self.visual_size:
-            key = ("abs", tuple(self.visual_size))
+            key = ("abs", tuple(self.visual_size), rotation)
             if self._img_scale_key != key:
-                self._img_scaled = pygame.transform.smoothscale(self._img, self.visual_size)
+                scaled = pygame.transform.smoothscale(self._img, self.visual_size)
+                if rotation:
+                    scaled = pygame.transform.rotate(scaled, rotation)
+                self._img_scaled = scaled
                 self._img_scale_key = key
             return self._img_scaled
 
-        # si no relativo al hitbox
         target_w = max(8, int(PLAYER_W * self.visual_scale))
         target_h = max(8, int(PLAYER_H * self.visual_scale * 1.2))
-        key = ("rel", target_w, target_h)
+        key = ("rel", target_w, target_h, rotation)
         if self._img_scale_key != key:
-            self._img_scaled = pygame.transform.smoothscale(self._img, (target_w, target_h))
+            scaled = pygame.transform.smoothscale(self._img, (target_w, target_h))
+            if rotation:
+                scaled = pygame.transform.rotate(scaled, rotation)
+            self._img_scaled = scaled
             self._img_scale_key = key
         return self._img_scaled
 
@@ -72,5 +92,4 @@ class Player(Entity):
             rect = img.get_rect(center=(int(sx), int(sy)))
             surface.blit(img, rect)
         else:
-            # si no hay imagen
-            pygame.draw.rect(surface, self.color, (sx-8, sy-6, 16, 12), width=0)
+            pygame.draw.rect(surface, self.color, (sx - 8, sy - 6, 16, 12), width=0)

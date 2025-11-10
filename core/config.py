@@ -6,6 +6,8 @@ SCREEN_SIZE = (SCREEN_W, SCREEN_H)
 FPS = 60
 BG_COLOR = (18, 18, 22)
 
+# --- Opciones visuales ---
+
 # --- HUD / mensajes ---
 P1_MSG_COLOR = (64, 160, 255)
 P2_MSG_COLOR = (220, 70, 70)

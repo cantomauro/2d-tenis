@@ -144,7 +144,8 @@ Estilo pixel art.
 
    ### Dirección de Arte
 
-* **Estilo:** Pixel Art isométrico con sprites 2D animados.
+* **Estilo:** Prototipo isométrico con placeholders simples (rectángulos coloreados) para los jugadores; la pelota utiliza la animación del paquete Kenney Sports Pack para dar contraste visual.
+* **Jugadores:** cuerpos base con overlays de pierna y mano tomados del Kenney Sports Pack (variantes Blue y Red) para simular movimiento sin invertir en una hoja completa.
 
 * **Paleta de Colores:**
 
@@ -225,7 +226,8 @@ Esta sección es crucial para llevar un control de los recursos utilizados, sus 
 | Festejo                           | Sonido de festejo que se reproduce al llegar a 7 puntos | Audio       | https://pixabay.com/sound-effects/search/stadium/ "Crowd cheering"    | CC0               | Gratis |  
 | Golpe                             | Sonido al golpear la pelota                             | Audio       | https://freesound.org/people/InspectorJ/sounds/411641/                | CC0               | Gratis |  
 | Ambiente                          | Sonido ambiente durante el partido                      | Audio       | https://pixabay.com/sound-effects/search/stadium/ "Soccer Stadium 10" | CC0               | Gratis |  
-| Jugadores y Pelota                | Spritesheet para los jugadores y para la pelota         | Spritesheet | https://kenney.nl/assets/sports-pack                                  | CC0               | Gratis |
+| Jugadores y overlays              | Cuerpos base + overlays (piernas/ manos) del Kenney Sports Pack | PNG         | Kenney Sports Pack / `others/spritesheets.zip` | CC0 | Gratis |
+| Pelota de tenis                   | Animación de dos frames (Kenney Sports Pack, PNG)       | PNG         | Kenney Sports Pack / `others/spritesheets.zip` | CC0               | Gratis |
 | Press Start 2P                    | Fuente para todo el juego                               | Fuente      | https://fonts.google.com/specimen/Press+Start+2P                      | Open Font License | Gratis |
 
 —

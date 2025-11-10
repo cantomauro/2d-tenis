@@ -1,5 +1,5 @@
 # core/ai/opponent.py
-from core.utils.math2d import normalize
+from core.physics.vector import normalize
 
 
 def ai_drive(player_ai, ball, dt):

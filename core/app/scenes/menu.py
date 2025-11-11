@@ -14,9 +14,7 @@ from core.app.shared import (
     PLAYER_SPRITE_SIZE,
     BALL_VISUAL_RADIUS,
     FONT_PATH,
-    BALL_ANIM_FRAMES,
-    BALL_FRAME_DURATION,
-    PLAYER_OVERLAY_CONFIG,
+    load_player_frames,
 )
 
 
@@ -32,8 +30,8 @@ class MenuScene:
             ("SALIR", "exit"),
         ]
         self.background_court = Court(COURT_BOUNDS, screen_offset=(ISO_OFFSET_X, ISO_OFFSET_Y))
-        blue_assets = PLAYER_OVERLAY_CONFIG["blue"]
-        red_assets = PLAYER_OVERLAY_CONFIG["red"]
+        blue_frames = load_player_frames("blue")
+        red_frames = load_player_frames("red")
         self.bg_entities = sorted(
             [
                 Player(
@@ -45,15 +43,9 @@ class MenuScene:
                     visual_size=PLAYER_SPRITE_SIZE,
                     visual_rotation=0.0,
                     color=(64, 160, 255),
-                    image_path=blue_assets["body"],
-                    leg_image_path=blue_assets["leg"],
-                    hand_image_path=blue_assets["hand"],
-                    leg_offset=blue_assets["leg_offset"],
-                    hand_offset=blue_assets["hand_offset"],
-                    leg_stride=blue_assets["leg_stride"],
-                    leg_rotation_range=blue_assets["leg_rotation_range"],
-                    leg_scale=blue_assets["leg_scale"],
-                    hand_scale=blue_assets["hand_scale"],
+                    sprite_frames=blue_frames,
+                    animation_speed=6.0,
+                    swing_duration=0.25,
                 ),
                 Player(
                     COURT_BOUNDS.left + COURT_BOUNDS.width / 2,
@@ -64,15 +56,9 @@ class MenuScene:
                     visual_size=PLAYER_SPRITE_SIZE,
                     visual_rotation=0.0,
                     color=(220, 70, 70),
-                    image_path=red_assets["body"],
-                    leg_image_path=red_assets["leg"],
-                    hand_image_path=red_assets["hand"],
-                    leg_offset=red_assets["leg_offset"],
-                    hand_offset=red_assets["hand_offset"],
-                    leg_stride=red_assets["leg_stride"],
-                    leg_rotation_range=red_assets["leg_rotation_range"],
-                    leg_scale=red_assets["leg_scale"],
-                    hand_scale=red_assets["hand_scale"],
+                    sprite_frames=red_frames,
+                    animation_speed=6.0,
+                    swing_duration=0.25,
                 ),
                 Ball(
                     COURT_BOUNDS.left + COURT_BOUNDS.width / 2,
@@ -82,8 +68,6 @@ class MenuScene:
                     radius=10,
                     visual_scale=1.0,
                     visual_radius=BALL_VISUAL_RADIUS,
-                    image_frames=BALL_ANIM_FRAMES,
-                    frame_duration=BALL_FRAME_DURATION,
                 ),
             ],
             key=lambda e: e.depth_key(),

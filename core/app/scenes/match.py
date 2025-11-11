@@ -20,9 +20,8 @@ from core.app.shared import (
     P1_KEYS,
     P2_KEYS,
     FONT_PATH,
-    BALL_ANIM_FRAMES,
-    BALL_FRAME_DURATION,
-    PLAYER_OVERLAY_CONFIG,
+    load_player_frames,
+    TRIBUNE_IMAGE_PATH,
 )
 from core.entities.player import Player
 from core.entities.ball import Ball
@@ -50,14 +49,18 @@ class MatchScene:
         self.clock = clock
         self.hud_font = pygame.font.Font(FONT_PATH, 24)
         self.hud = Hud(self.hud_font)
+        self.crowd_rotation = -20
+        self.crowd_image = None
+        self.crowd_rect = None
+        self._load_crowd_sprite()
 
     def run(self, p2_is_ai: bool):
         court = Court(COURT_BOUNDS, screen_offset=(ISO_OFFSET_X, ISO_OFFSET_Y))
         phys_rect = court.physics_rect
         left_singles_x = court.play_rect.left
         right_singles_x = court.play_rect.right
-        blue_assets = PLAYER_OVERLAY_CONFIG["blue"]
-        red_assets = PLAYER_OVERLAY_CONFIG["red"]
+        blue_frames = load_player_frames("blue")
+        red_frames = load_player_frames("red")
 
         p1 = Player(
             COURT_BOUNDS.left + COURT_BOUNDS.width / 2,
@@ -65,20 +68,12 @@ class MatchScene:
             speed=190,
             is_ai=False,
             name="P1",
-            visual_size=PLAYER_SPRITE_SIZE,
+            visual_size=(100,100),
             visual_rotation=0.0,
             animation_speed=8.0,
             swing_duration=0.25,
             color=(64, 160, 255),
-            image_path=blue_assets["body"],
-            leg_image_path=blue_assets["leg"],
-            hand_image_path=blue_assets["hand"],
-            leg_offset=blue_assets["leg_offset"],
-            hand_offset=blue_assets["hand_offset"],
-            leg_stride=blue_assets["leg_stride"],
-            leg_rotation_range=blue_assets["leg_rotation_range"],
-            leg_scale=blue_assets["leg_scale"],
-            hand_scale=blue_assets["hand_scale"],
+            sprite_frames=blue_frames,
         )
         p2_speed = 215 if p2_is_ai else 175
         p2 = Player(
@@ -87,20 +82,12 @@ class MatchScene:
             speed=p2_speed,
             is_ai=p2_is_ai,
             name="P2",
-            visual_size=PLAYER_SPRITE_SIZE,
+            visual_size=(82,82),
             visual_rotation=0.0,
             animation_speed=8.0,
             swing_duration=0.25,
             color=(220, 70, 70),
-            image_path=red_assets["body"],
-            leg_image_path=red_assets["leg"],
-            hand_image_path=red_assets["hand"],
-            leg_offset=red_assets["leg_offset"],
-            hand_offset=red_assets["hand_offset"],
-            leg_stride=red_assets["leg_stride"],
-            leg_rotation_range=red_assets["leg_rotation_range"],
-            leg_scale=red_assets["leg_scale"],
-            hand_scale=red_assets["hand_scale"],
+            sprite_frames=red_frames,
         )
         ball = Ball(
             COURT_BOUNDS.left + COURT_BOUNDS.width / 2,
@@ -111,8 +98,6 @@ class MatchScene:
             visual_scale=1.0,
             visual_radius=BALL_VISUAL_RADIUS,
             image_path=asset("ball", "ball.png"),
-            image_frames=BALL_ANIM_FRAMES,
-            frame_duration=BALL_FRAME_DURATION,
         )
 
         server = "P1"
@@ -263,6 +248,8 @@ class MatchScene:
         p2,
     ):
         self.screen.fill(BG_COLOR)
+        if self.crowd_image and self.crowd_rect:
+            self.screen.blit(self.crowd_image, self.crowd_rect)
         court.draw(self.screen, world_to_iso)
 
         entities.sort(key=lambda entity: entity.depth_key())
@@ -294,3 +281,26 @@ class MatchScene:
         mode_label = "MODO: 1 JUGADOR" if p2.is_ai else "MODO: 2 JUGADORES"
         hint = self.hud_font.render(mode_label + " - ESC para menú", True, (200, 200, 200))
         self.screen.blit(hint, (16, SCREEN_H - 48))
+
+    def _load_crowd_sprite(self):
+        try:
+            image = pygame.image.load(TRIBUNE_IMAGE_PATH).convert_alpha()
+        except Exception as exc:
+            print(f"[MatchScene] No pude cargar tribuna '{TRIBUNE_IMAGE_PATH}': {exc}")
+            return
+
+        # Bring the crowd closer to the court and scale it up for readability.
+        scale_factor = 1.5
+        new_size = (
+            int(image.get_width() * scale_factor),
+            int(image.get_height() * scale_factor),
+        )
+        if new_size[0] > 0 and new_size[1] > 0:
+            image = pygame.transform.smoothscale(image, new_size)
+
+        crowd_world_x = COURT_BOUNDS.left - 50
+        crowd_world_y = COURT_BOUNDS.top + COURT_BOUNDS.height * 0.5
+        screen_x, screen_y = world_to_iso(crowd_world_x, crowd_world_y, ISO_OFFSET_X, ISO_OFFSET_Y)
+
+        self.crowd_image = image
+        self.crowd_rect = image.get_rect(midright=(int(screen_x), int(screen_y)))

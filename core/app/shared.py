@@ -21,38 +21,50 @@ P2_KEYS = {
     "down": pygame.K_DOWN,
 }
 
-PLAYER_SPRITE_SIZE = (40, 40)
+PLAYER_SPRITE_SIZE = (64, 64)
 BALL_VISUAL_RADIUS = 12
-BALL_ANIM_FRAMES = [
-    asset("equipment", "ball_tennis1.png"),
-    asset("equipment", "ball_tennis2.png"),
-]
-BALL_FRAME_DURATION = 0.16
+TRIBUNE_IMAGE_PATH = asset("crowd", "crowd-happy.png")
 
-PLAYER_OVERLAY_CONFIG = {
-    "blue": {
-        "body": asset("players", "blue", "jugador1.png"),
-        "leg": asset("players", "blue", "pie.png"),
-        "hand": asset("players", "blue", "mano.png"),
-        "leg_offset": (0, 8),
-        "hand_offset": (4, -6),
-        "leg_stride": 3.5,
-        "leg_rotation_range": (-12.0, 12.0),
-        "leg_scale": 0.7,
-        "hand_scale": 0.45,
-    },
-    "red": {
-        "body": asset("players", "red", "jugador2.png"),
-        "leg": asset("players", "red", "pie.png"),
-        "hand": asset("players", "red", "mano.png"),
-        "leg_offset": (0, 8),
-        "hand_offset": (-3, -6),
-        "leg_stride": 3.5,
-        "leg_rotation_range": (-12.0, 12.0),
-        "leg_scale": 0.7,
-        "hand_scale": 0.45,
-    },
+PLAYER_FRAME_PATHS = {
+    "blue": [
+        asset("players", "blue", "blue-0.png"),
+        asset("players", "blue", "blue-1.png"),
+        asset("players", "blue", "blue-2.png"),
+    ],
+    "red": [
+        asset("players", "red", "red-0.png"),
+        asset("players", "red", "red-1.png"),
+        asset("players", "red", "red-2.png"),
+    ],
 }
+
+_PLAYER_FRAME_CACHE: dict[str, list[pygame.Surface]] = {}
+
+
+def load_player_frames(color: str) -> list[pygame.Surface]:
+    """
+    Devuelve (y cachea) la secuencia de frames para el color indicado.
+    Se asume que pygame ya inicializó display antes de llamar a esta función.
+    """
+    key = color.lower()
+    if key not in PLAYER_FRAME_PATHS:
+        raise ValueError(f"Color de jugador desconocido: '{color}'")
+    if key in _PLAYER_FRAME_CACHE:
+        return _PLAYER_FRAME_CACHE[key]
+
+    frames: list[pygame.Surface] = []
+    for path in PLAYER_FRAME_PATHS[key]:
+        try:
+            frames.append(pygame.image.load(path).convert_alpha())
+        except Exception as exc:
+            print(f"[shared.load_player_frames] No pude cargar '{path}': {exc}")
+            placeholder = pygame.Surface(PLAYER_SPRITE_SIZE, pygame.SRCALPHA)
+            placeholder.fill((255, 0, 255, 160))
+            frames.append(placeholder)
+    _PLAYER_FRAME_CACHE[key] = frames
+    return frames
+
+
 FONT_PATH = asset("fonts", "PressStart2P-Regular.ttf")
 
 

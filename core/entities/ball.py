@@ -20,9 +20,9 @@ class Ball(Entity):
     ):
         super().__init__(x, y)
         self.vx, self.vy = vx, vy
-        self.radius = radius              # ← tamaño de colisión
-        self.visual_scale = float(visual_scale)  # ← multiplicador visual (1.0 = igual que radius)
-        self.visual_radius = visual_radius  # ← override absoluto visual en “radio”
+        self.radius = radius              #  tamaño de colisión
+        self.visual_scale = float(visual_scale)  # multiplicador visual
+        self.visual_radius = visual_radius  # override absoluto visual en “radio”
         self.last_hitter = None    # "P1" | "P2" | None
         self.hit_cooldown = 0.0    # segundos restantes de cooldown
         self._img = None

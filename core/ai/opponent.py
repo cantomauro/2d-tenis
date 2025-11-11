@@ -4,12 +4,12 @@ from core.physics.vector import normalize
 
 def ai_drive(player_ai, ball, dt):
     """
-    IA simple: sigue la pelota cuando está en su campo y se repliega a su base cuando la bola está en campo rival.
+    La IA sigue la pelota cuando está en su cancha, y se vuelve su posición inicial cuando la bola está en el campo rival.
     """
     target_x = ball.x
     target_y = ball.y
 
-    # Si la pelota está en la mitad rival, replegarse hacia su zona de espera
+    # Si la pelota está en la otra cancha, vuelve a la posición inicial
     if ball.y > player_ai.y + 36:
         home_y = getattr(player_ai, "home_y", player_ai.y)
         home_x = getattr(player_ai, "home_x", player_ai.x)

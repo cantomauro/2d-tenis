@@ -14,7 +14,7 @@ from core.app.shared import COURT_BOUNDS
 
 
 def prepare_serve(ball, towards_p2: bool, delay: float = SERVE_DELAY):
-    """Reposiciona la pelota y arranca el temporizador de saque."""
+    """reposiciona la pelota y arranca el temporizador de saque."""
     ball.x = COURT_X + COURT_W / 2
     ball.y = COURT_Y + COURT_H / 2
     ball.vx = 0.0
@@ -23,7 +23,7 @@ def prepare_serve(ball, towards_p2: bool, delay: float = SERVE_DELAY):
 
 
 def apply_serve_velocity(ball, towards_p2: bool):
-    """Asigna una velocidad inicial pseudoaleatoria a la pelota."""
+    """asigna una velocidad inicial pseudoaleatoria a la pelota."""
     speed = 260
     ball.vx = random.choice([-1, 1]) * random.uniform(0.4 * speed, 0.8 * speed)
     vy_mag = random.uniform(0.6 * speed, 1.0 * speed)
@@ -31,7 +31,7 @@ def apply_serve_velocity(ball, towards_p2: bool):
 
 
 def check_point(ball, p1_score: int, p2_score: int):
-    """Evalúa si hay punto y devuelve el nuevo estado de tanteador."""
+    """evalúa si hay punto y devuelve el nuevo estado."""
     top_goal = ball.y - ball.radius <= COURT_BOUNDS.top
     bot_goal = ball.y + ball.radius >= COURT_BOUNDS.bottom
 

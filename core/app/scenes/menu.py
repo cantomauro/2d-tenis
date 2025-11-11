@@ -17,6 +17,7 @@ from core.app.shared import (
     load_player_frames,
     load_crowd_layers,
 )
+from core.ui.menu_panel import draw_menu_panel
 
 
 class MenuScene:
@@ -109,43 +110,12 @@ class MenuScene:
             pygame.display.flip()
 
     def _draw_panel(self, selected_index: int):
-        panel_w, panel_h = 640, 320
-        panel_surface = pygame.Surface((panel_w, panel_h), pygame.SRCALPHA)
-        panel_rect = panel_surface.get_rect()
-        pygame.draw.rect(
-            panel_surface,
-            (12, 14, 22, 215),
-            panel_rect,
-            border_radius=20,
-        )
-
-        title = self.title_font.render("ARKANOID TENIS", True, (255, 255, 255))
-        panel_surface.blit(title, title.get_rect(center=(panel_w // 2, 72)))
-
-        base_y = 152
-        spacing = 62
-        for idx, (label, _) in enumerate(self.options):
-            row_y = base_y + idx * spacing
-            if idx == selected_index:
-                highlight_rect = pygame.Rect(36, row_y - 28, panel_w - 72, 56)
-                pygame.draw.rect(
-                    panel_surface,
-                    (70, 130, 220, 160),
-                    highlight_rect,
-                    border_radius=16,
-                )
-            color = (255, 255, 255) if idx == selected_index else (200, 200, 200)
-            text = self.option_font.render(label, True, color)
-            panel_surface.blit(text, text.get_rect(center=(panel_w // 2, row_y)))
-
-        pygame.draw.rect(
-            panel_surface,
-            (255, 255, 255, 230),
-            panel_rect,
-            width=2,
-            border_radius=20,
-        )
-        self.screen.blit(
-            panel_surface,
-            panel_surface.get_rect(center=(SCREEN_W // 2, SCREEN_H // 2)),
+        draw_menu_panel(
+            self.screen,
+            self.title_font,
+            self.option_font,
+            "ARKANOID TENIS",
+            self.options,
+            selected_index,
+            center=(SCREEN_W // 2, SCREEN_H // 2),
         )

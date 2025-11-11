@@ -5,7 +5,7 @@ from core.app.shared import COURT_BOUNDS
 
 
 def clamp_player_to_half(player, top_half: bool):
-    """Restringe al jugador a su mitad de la cancha."""
+    """restringe al jugador a su mitad de la cancha."""
     r = player.hit_rect
     min_x = COURT_BOUNDS.left + r.width / 2
     max_x = COURT_BOUNDS.right - r.width / 2
@@ -23,7 +23,7 @@ def clamp_player_to_half(player, top_half: bool):
 
 
 def reset_players_to_spawn(p1, p2):
-    """Ubica a cada jugador en su posición inicial."""
+    """ubica a cada jugador en su posición inicial."""
     mid_x = COURT_X + COURT_W / 2
     p1.x, p1.y = mid_x, COURT_Y + COURT_H * 0.85
     p2.x, p2.y = mid_x, COURT_Y + COURT_H * 0.15

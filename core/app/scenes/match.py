@@ -40,6 +40,7 @@ from core.gameplay.serve import (
     reached_target,
 )
 from core.utils.paths import asset
+from core.ui.menu_panel import draw_menu_panel
 
 
 class MatchScene:
@@ -394,15 +395,13 @@ class MatchScene:
             text = self.pause_option_font.render(label, True, color)
             panel_surface.blit(text, text.get_rect(center=(panel_w // 2, row_y)))
 
-        pygame.draw.rect(
-            panel_surface,
-            (255, 255, 255, 230),
-            panel_rect,
-            width=2,
-            border_radius=20,
-        )
-        self.screen.blit(
-            panel_surface,
-            panel_surface.get_rect(center=(SCREEN_W // 2, SCREEN_H // 2)),
+        draw_menu_panel(
+            self.screen,
+            self.pause_title_font,
+            self.pause_option_font,
+            "PAUSA",
+            self.pause_options,
+            selected_index,
+            center=(SCREEN_W // 2, SCREEN_H // 2),
         )
 

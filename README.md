@@ -145,7 +145,7 @@ Estilo pixel art.
    ### Dirección de Arte
 
 * **Estilo:** Prototipo isométrico con jugadores realizados en pixel art; la pelota usa una imagen de color solido para poder distinguirse en la cancha.
-* **Jugadores:** Sprites creados manualmente dentro del sitio web https://www.pixilart.com/ ,dos frames de movimiento + uno de swing.
+* **Jugadores:** Sprites creados manualmente dentro del sitio web https://www.pixilart.com/ , tomando como referencia una imagen generada por IA, dos/tres frames de movimiento + uno de swing.
 
 * **Paleta de Colores:**
 

@@ -5,20 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7debdab4-1df5-4229-925a-3a5b31472f48" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/project.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/INSTRUCTIONS.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/equipment/ball_tennis1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/equipment/ball_tennis2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/players/blue/jugador1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/players/blue/mano.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/players/blue/pie.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/players/red/jugador2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/players/red/mano.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/players/red/pie.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/crowd/crowd-happy.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/app/engine.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/app/engine.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/app/scenes/match.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/app/scenes/match.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/app/scenes/menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/app/scenes/menu.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/app/shared.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/app/shared.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/others/spritesheets.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/audio/sfx.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/audio/sfx.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/render/hud.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/render/hud.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,18 +33,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "cantomauro"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;cantomauro&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/cantomauro/2d-tenis",
-    "accountId": "9611311c-ecec-417b-a3f8-991afe1306ca"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/cantomauro/2d-tenis&quot;,
+    &quot;accountId&quot;: &quot;9611311c-ecec-417b-a3f8-991afe1306ca&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
 }</component>
@@ -61,11 +59,14 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python.config.executor": "Run",
     "Python.main.executor": "Run",
+    "Python.match.executor": "Run",
     "Python.shared.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "master",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -91,7 +92,10 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1758465576197</updated>
-      <workItem from="1762813507829" duration="4167000" />
+      <workItem from="1762813507829" duration="4208000" />
+      <workItem from="1762823163668" duration="83000" />
+      <workItem from="1762880273675" duration="1423000" />
+      <workItem from="1762884194589" duration="5856000" />
     </task>
     <servers />
   </component>
@@ -99,7 +103,9 @@
     <option name="version" value="3" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/2d_tenis$main.coverage" NAME="main Coverage Results" MODIFIED="1762823053229" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/2d_tenis$main.coverage" NAME="main Coverage Results" MODIFIED="1762896354763" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/2d_tenis$config.coverage" NAME="config Coverage Results" MODIFIED="1762894209752" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/core" />
+    <SUITE FILE_PATH="coverage/2d_tenis$match.coverage" NAME="match Coverage Results" MODIFIED="1762894316052" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/core/app/scenes" />
     <SUITE FILE_PATH="coverage/2d_tenis$shared.coverage" NAME="shared Coverage Results" MODIFIED="1762818351346" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/core/app" />
   </component>
 </project>

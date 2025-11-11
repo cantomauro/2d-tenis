@@ -1,13 +1,19 @@
 # utilidades para rutas a assets/ (cargar imágenes/fuentes con rutas relativas seguras).
 
 import os
+import sys
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PROJECT_ROOT = os.path.dirname(BASE_DIR)
+
+if hasattr(sys, "_MEIPASS"):
+    PROJECT_ROOT = sys._MEIPASS  # estamos dentro del ejecutable
+else:
+    PROJECT_ROOT = os.path.dirname(BASE_DIR)  # ejecución normal desde el repo
+
 ASSETS = os.path.join(PROJECT_ROOT, "assets")
 
 
-def asset(*parts):  # asset("players", "idle_se.png")
+def asset(*parts):
     return os.path.join(ASSETS, *parts)
 
 

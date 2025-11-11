@@ -7,10 +7,11 @@ from core.utils.paths import asset
 _golpe = None
 _ambiente = None
 _festejo = None
+_menu = None
 
 
 def load_sounds():
-    global _golpe, _ambiente, _festejo
+    global _golpe, _ambiente, _festejo, _menu
     if _golpe is None:
         try:
             _golpe = pygame.mixer.Sound(asset("sfx", "golpe.wav"))
@@ -28,9 +29,16 @@ def load_sounds():
     if _festejo is None:
         try:
             _festejo = pygame.mixer.Sound(asset("sfx", "festejo.mp3"))
-            _festejo.set_volume(0.65)
+            _festejo.set_volume(0.4)
         except pygame.error:
             _festejo = None
+
+    if _menu is None:
+        try:
+            _menu = pygame.mixer.Sound(asset("sfx", "menu.mp3"))
+            _menu.set_volume(0.7)
+        except pygame.error:
+            _menu = None
 
 
 def play_golpe():
@@ -64,3 +72,10 @@ def play_festejo():
 def stop_festejo():
     if _festejo:
         _festejo.stop()
+
+
+def play_menu_nav():
+    if _menu is None:
+        load_sounds()
+    if _menu:
+        _menu.play()

@@ -8,6 +8,10 @@ from core.config import (
     COURT_Y,
     COURT_W,
     COURT_H,
+    CROWD_BG_SCALE,
+    CROWD_BG_OFFSET,
+    CROWD_SIDE_SCALE,
+    CROWD_SIDE_OFFSET,
 )
 from core.utils.paths import asset
 
@@ -22,8 +26,7 @@ P2_KEYS = {
 }
 
 PLAYER_SPRITE_SIZE = (64, 64)
-BALL_VISUAL_RADIUS = 12
-TRIBUNE_IMAGE_PATH = asset("crowd", "crowd-happy.png")
+BALL_VISUAL_RADIUS = 10
 
 PLAYER_FRAME_PATHS = {
     "blue": [
@@ -66,6 +69,76 @@ def load_player_frames(color: str) -> list[pygame.Surface]:
 
 
 FONT_PATH = asset("fonts", "PressStart2P-Regular.ttf")
+
+CROWD_LAYER_DEFS = [
+    {
+        "path": asset("crowd", "crowd.png"),
+        "scale": CROWD_BG_SCALE,
+        "offset": CROWD_BG_OFFSET,
+        "anchor": "center",
+        "scale_mode": "screen",
+    },
+    {
+        "path": asset("crowd", "crowd2.png"),
+        "scale": CROWD_SIDE_SCALE,
+        "offset": CROWD_SIDE_OFFSET,
+        "anchor": "topright",
+        "scale_mode": "image",
+    },
+]
+
+_CROWD_LAYER_CACHE: list[tuple[pygame.Surface, tuple[int, int]]] | None = None
+
+
+def load_crowd_layers() -> list[tuple[pygame.Surface, tuple[int, int]]]:
+    """Carga y cachea todas las capas de público definidas en CROWD_LAYER_DEFS."""
+    global _CROWD_LAYER_CACHE
+    if _CROWD_LAYER_CACHE is not None:
+        return _CROWD_LAYER_CACHE
+
+    layers: list[tuple[pygame.Surface, tuple[int, int]]] = []
+    for conf in CROWD_LAYER_DEFS:
+        surface = _load_crowd_surface(conf["path"], conf["scale"], conf["scale_mode"])
+        if surface is None:
+            continue
+        anchor_pos = _compute_anchor(surface.get_width(), surface.get_height(), conf["anchor"])
+        offset = (
+            anchor_pos[0] + conf["offset"][0],
+            anchor_pos[1] + conf["offset"][1],
+        )
+        layers.append((surface, offset))
+
+    _CROWD_LAYER_CACHE = layers
+    return _CROWD_LAYER_CACHE
+
+
+def _load_crowd_surface(path: str, scale: float, scale_mode: str) -> pygame.Surface | None:
+    try:
+        image = pygame.image.load(path).convert_alpha()
+    except Exception as exc:
+        print(f"[shared.load_crowd_layers] No pude cargar '{path}': {exc}")
+        return None
+
+    scale = max(0.1, scale)
+    if scale_mode == "screen":
+        target_w = max(1, int(SCREEN_W * scale))
+        target_h = max(1, int(SCREEN_H * scale))
+    else:
+        width, height = image.get_size()
+        target_w = max(1, int(width * scale))
+        target_h = max(1, int(height * scale))
+
+    if image.get_size() != (target_w, target_h):
+        image = pygame.transform.smoothscale(image, (target_w, target_h))
+    return image
+
+
+def _compute_anchor(width: int, height: int, anchor: str) -> tuple[int, int]:
+    if anchor == "center":
+        return (SCREEN_W - width) // 2, (SCREEN_H - height) // 2
+    if anchor == "topright":
+        return SCREEN_W - width, 0
+    return 0, 0
 
 
 def auto_iso_offset(world_rect, screen_w, screen_h, backshift=0):

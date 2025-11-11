@@ -5,6 +5,12 @@ SCREEN_W, SCREEN_H = 1024, 768
 SCREEN_SIZE = (SCREEN_W, SCREEN_H)
 FPS = 60
 BG_COLOR = (18, 18, 22)
+WINDOW_ICON_SCALE = 1
+CROWD_BG_SCALE = .7  # 1.0 = pantalla completa; <1 reduce el fondo, >1 lo agranda
+CROWD_BG_OFFSET = (-150, -100)  # Ajusta la posición final del PNG (x, y)
+CROWD_SIDE_SCALE = .7      # Escala de la tribuna lateral (detrás del jugador 2)
+CROWD_SIDE_OFFSET = (20, -60)   # Offset relativo al ancla (top-right) de la tribuna lateral
+CROWD_LEFT_SCALE = 0.85    # Escala de la segunda tribuna (lado izquierdo)
 
 # --- Opciones visuales ---
 

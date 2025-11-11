@@ -6,33 +6,33 @@
 
 **Correo electrónico**: [bcantomauro@gmail.com](mailto:bcantomauro@gmail.com)
 
-**Versión**: 1.0.0
+**Versión**: 2.0 (final para la entrega)
 
-**Fecha**: 2025-10-15
+**Fecha**: 12/11/2015
 
 1. ## Resumen Ejecutivo 
 
-* **Título del Juego**: Tenis 2D
+* **Título del Juego**: ARKANOID TENIS.
 
 * **Género**: Deportes / Arcade Competitivo
 
 * **Plataforma** **Objetivo**: PC (Windows 10, Pygame)
 
-* **Público Objetivo**: Jugadores casuales, fans de los juegos retro y arcade, edad 10+
+* **Público Objetivo**: Jugadores casuales, fans del tenis y de los juegos retro y arcade, edad 10+
 
-* **Propuesta Única de Venta (USP)**: Un juego de tenis rápido y competitivo con estética isométrica, controles simples y acción inmediata, ideal para partidas cortas uno contra uno o contra la IA.
+* **Propuesta Única de Venta (USP)**: Un juego de tenis rápido y competitivo estilo arkanoid, con estética isométrica, controles simples y acción inmediata, ideal para partidas cortas uno contra uno o contra la IA.
 
 2. ## Concepto del Juego 
 
    1. ### Visión General
 
-   Tenis 2D es un juego deportivo de perspectiva isométrica donde dos jugadores (jugador vs jugador o jugador vs IA) se enfrentan en un partido de tenis tipo arcade.
+   ARKNAOID TENIS es un juego deportivo de perspectiva isométrica donde dos jugadores (jugador vs jugador o jugador vs IA) se enfrentan en un partido de tenis tipo arcade.
 
    El objetivo es golpear la pelota de forma precisa y anotar puntos cuando el oponente no logra devolverla. El enfoque es la velocidad, reflejos y precisión, sin reglas realistas, sino diversión inmediata.
 
    2. ### Pilares de Diseño 
 
-* **Pilar 1 – Jugabilidad rápida y fluida:** partidas cortas, sin tiempos muertos.
+* **Pilar 1 – Jugabilidad rápida y fluida:** partidas cortas y fluidas.
 
 * **Pilar 2 – Controles intuitivos:** cualquiera puede aprender a jugar en segundos.
 
@@ -42,11 +42,11 @@
 
   3. ### Inspiraciones y Referencias 
 
-* *Pong (Atari, 1972\)* – Simplicidad y adicción.
+* Pong (Atari, 1972\)* – Simplicidad y adicción.
 
-* *Virtua Tennis (SEGA, 2000\)* – Dinamismo en los intercambios.
+* Virtua Tennis (SEGA, 2000\)* – Dinamismo en los intercambios.
 
-* *Tennis Clash (Wildlife)* – Velocidad y presentación visual limpia.
+* Arknaoid (Taito, 1986).
 
 * Juegos de *arcade deportivos 2D* de los años 90\.
 
@@ -56,7 +56,7 @@
 
 1. **Movimiento:** el jugador se desplaza por su lado de la cancha.
 
-2. **Golpe:** cuando la pelota se acerca, puede golpearla para enviarla al otro lado.
+2. **Golpe:** cuando la pelota se acerca, el jugador debe impactar con ella para devolver el golpe.
 
 3. **Respuesta:** el oponente intenta devolverla.
 
@@ -75,7 +75,7 @@
   **Sistema de “Golpeo”:**  
 * El jugador golpea automáticamente cuando la pelota colisiona con su zona de impacto (rectángulo).
 
-* Rebotes realistas en los bordes laterales.
+* Rebotes en los bordes laterales.
 
 * Si la pelota sale por el fondo contrario, el jugador anota.
 
@@ -133,7 +133,7 @@ El “mundo” se limita a la cancha, representando la esencia del deporte: refl
     
   **Cancha Principal:**
 
-* **Descripción Visual:** fondo verde azulado con líneas blancas, y red amarilla para mejor distinción. 
+* **Descripción Visual:** fondo verde con líneas blancas, red amarilla para mejor distinción. A los laterales la tribuna con espectadores.
 Estilo pixel art.
 
 * **Objetivos:** anotar puntos hasta alcanzar el puntaje objetivo (7 por defecto).
@@ -144,8 +144,8 @@ Estilo pixel art.
 
    ### Dirección de Arte
 
-* **Estilo:** Prototipo isométrico con placeholders simples (rectángulos coloreados) para los jugadores; la pelota usa un círculo animado mínimo hasta integrar los nuevos sprites personalizados.
-* **Jugadores:** sprites en producción propia (dos frames de movimiento + uno de swing) pensados para iterar rápido sin overlays.
+* **Estilo:** Prototipo isométrico con jugadores realizados en pixel art; la pelota usa una imagen de color solido para poder distinguirse en la cancha.
+* **Jugadores:** Sprites creados manualmente dentro del sitio web https://www.pixilart.com/ ,dos frames de movimiento + uno de swing.
 
 * **Paleta de Colores:**
 
@@ -159,15 +159,13 @@ Estilo pixel art.
 
   ### Diseño de Sonido y Música
 
-**Música:** base electrónica ligera tipo “chiptune”, loops cortos y enérgicos.
 
 **Efectos de Sonido:**
 
+
+* Sonido de navegación en el menú.
 * Golpe a la pelota.
-* Musica relajante tipo retro en el menu principal.
-
-* Festejos del estadio al llegar a los 7 puntos.
-
+* Festejos del público al llegar al fin de cada partido.
 * Sonido ambiente de estadio durante el partido.
 
 
@@ -179,66 +177,66 @@ Estilo pixel art.
 
 ### HUD (Heads-Up Display)  
 
-ADJUNTAR CAPTURAS DE PANTALLA.
 
 **Marcador superior:** puntos de cada jugador.
 
 Indicador de quien hizo el tanto.
 
-**Indicador de velocidad de pelota.**
-
-**Texto “Match Point” / “Game Over”.**
+**Texto “GANA EL JUGADOR (JUGADOR1 / JUGADOR2)” al finalizar el partido.**
 
 	  
 	
 
 ### Menús
 
-**Menú Principal:** Jugar, Controles (guía, no se pueden configurar), Salir.
+**Menú Principal:** Jugar: 1 JUGADOR (VS IA), 2 JUGADORES, Salir.
 
-**Menú Pausa:** Reanudar, Reiniciar, Salir.
+**Menú Pausa:** Opcion "Reanudar", para poder retomar el juego en cualquier momento. Volver al menu principal y Salir del Juego.
 
-5. ## Plan de Producción y Monetización 
 
-   ### Hoja de Ruta (Roadmap)
 
-   
-
-Define los hitos principales del desarrollo.  
-\* \*\*Prototipo:\*\* \[Fecha\] \- Funcionalidades básicas jugables.  
-\* \*\*Vertical Slice:\*\* \[Fecha\] \- Una porción pulida del juego que representa la experiencia final.  
-\* \*\*Alfa:\*\* \[Fecha\] \- El juego está completo en cuanto a características, pero necesita pulido y corrección de errores.  
-\* \*\*Beta:\*\* \[Fecha\] \- El juego está casi terminado, abierto a pruebas masivas.  
-\* \*\*Lanzamiento:\*\* \[Fecha\]
 
 ### Modelo de Monetización
 
 **Gratis (Freeware / Proyecto académico).**
 
-Futuro opcional: versión comercial con skins y multijugador online. Publicidad ?
+**Futuro opcional:**
 
-6. ## Fuentes de los Assets
+Versión comercial con skins y multijugador online. 
+
+Agregar publicidad en las tribunas.
+
+5. ## Fuentes de los Assets
 
 Esta sección es crucial para llevar un control de los recursos utilizados, sus licencias y atribuciones.
 
-| Nombre del Asset                  | Descripción del Asset                                   | Tipo        | Origen/Fuente (URL)                                                   | Licencia          | Costo  |  
-|:----------------------------------|:--------------------------------------------------------|:------------|:----------------------------------------------------------------------|:------------------|:-------|
-| Festejo                           | Sonido de festejo que se reproduce al llegar a 7 puntos | Audio       | https://pixabay.com/sound-effects/search/stadium/ "Crowd cheering"    | CC0               | Gratis |  
-| Golpe                             | Sonido al golpear la pelota                             | Audio       | https://freesound.org/people/InspectorJ/sounds/411641/                | CC0               | Gratis |  
-| Ambiente                          | Sonido ambiente durante el partido                      | Audio       | https://pixabay.com/sound-effects/search/stadium/ "Soccer Stadium 10" | CC0               | Gratis |  
-| Jugadores y overlays              | Sprites propios (blue/red con 3 frames cada uno)         | PNG         | `assets/players/{blue,red}/`                     | —                 | —     |
-| Pelota de tenis                   | Placeholder temporal (círculo plano animado)             | —           | En producción propia                             | —                 | —     |
-| Press Start 2P                    | Fuente para todo el juego                               | Fuente      | https://fonts.google.com/specimen/Press+Start+2P                      | Open Font License | Gratis |
+| Nombre del Asset    | Descripción del Asset                                                            | Tipo   | Origen/Fuente (URL)                                                                                         | Licencia           | Costo    |  
+|:--------------------|:---------------------------------------------------------------------------------|:-------|:------------------------------------------------------------------------------------------------------------|:-------------------|:---------|
+| Festejo             | Sonido de festejo que se reproduce al llegar a 7 puntos                          | Audio  | https://pixabay.com/sound-effects/search/stadium/ "Crowd cheering"                                          | CC0                | Gratuito |  
+| Golpe               | Sonido al golpear la pelota                                                      | Audio  | https://freesound.org/people/InspectorJ/sounds/411641/                                                      | CC0                | Gratuito   |  
+| Ambiente            | Sonido ambiente durante el partido                                               | Audio  | https://pixabay.com/sound-effects/search/stadium/ "Soccer Stadium 10"                                       | CC0                | Gratuito   |  
+| Jugadores y tribuna | Sprites propios (blue/red con 3 frames cada uno), y crowd/crowd2 para la tribuna | PNG    | Producción propia                                                                                           | —                  | —        |
+| Ball                | Imagen de color solido para la pelota.                                           | PNG    | Producción propia                                                                                           | —                  | —        |
+| Menu                | Sonido al desplazarse y/o ejecutar una acción del menú                           |        | https://pixabay.com/sound-effects/search/game%20menu/ "Menu Selection"                                      | CC0                | Gratuito   |
+| Logo                | Logo para la ventana del juego                                                   | PNG    | Producción propia                                                                                           | -                  | -        |
+| Fireworks           | Fuegos artificiales distribuidos por la pantalla para el fin de cada partido.    | PNG    | https://opengameart.org/content/fireworks                                                                   | CC0                | Gratuito   |
+| Press Start 2P      | Fuente para todo el juego                                                        | Fuente | https://fonts.google.com/specimen/Press+Start+2P                                                            | Open Font License  | Gratuito   |
 
 —
 
-7. ## Control de Cambios
+6. ## Control de Cambios
 
 Este registro es vital para documentar cómo evoluciona el documento y las decisiones clave del proyecto.
 
-| Versión | Fecha | Autor del Cambio | Descripción del Cambio | Razón del Cambio |  
-| :--- | :--- | :--- | :--- | :--- |  
-| 1.0.0 | 2025-09-17 | \[Tu Nombre\] | Creación inicial del documento. | Inicio del proyecto. |  
-| 1.0.1 | 2025-09-24 | \[Nombre del Artista\] | Se actualizó la sección 5.1 con un nuevo moodboard. | Se definió mejor el estilo visual. |  
-| 1.1.0 | 2025-10-05 | \[Tu Nombre\] | Se eliminó la mecánica de "sed" de la sección 3.2. | Tras el playtesting, resultaba tediosa y no aportaba diversión. |
+| Versión   | Descripción del Cambio                                                      |  
+|:----------|:----------------------------------------------------------------------------|
+| 1.0.0     | Creación inicial del documento.                                             |  
+| 1.0.1     | Implementación de la cancha, assets básicos para los jugadores y la pelota. |  
+| 1.0.2     | Implementación de colisiones y físicas de rebote de la pelota.              |
+| 1.1.0     | Implementación del movimiento de la IA.                                     |
+| 1.2       | Ajustes al documento y creación del menú principal.                         |
+| 1.2.1     | Implementación de sonidos para todas las pantallas.                         |
+| 1.2.2     | Ajustar mecánicas de juego: físicas de rebote, movimiento de la IA.         |
+| 1.3       | Creación de los spritesheets para los jugadores y tribuna.                  |
+| 2.0 FINAL | Ajustes en detalles visuales.                                               |
 
